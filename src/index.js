@@ -1,8 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import registerServiceWorker from "./registerServiceWorker";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// ----------MATERIAL UI-----------
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+
+/*-------------FONT-AWESOME-------------*/
+import "../node_modules/font-awesome/css/font-awesome.min.css";
+
+ReactDOM.render(
+  <MuiThemeProvider>
+    <App />
+  </MuiThemeProvider>,
+  document.getElementById("root")
+);
 registerServiceWorker();

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./App.less";
+import "./css/global.less";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title"> Welcome to React </h1>
+          <i className="fa fa-fighter-jet" />
+          <h1 className="App-title">My React Project</h1>
         </header>
       </div>
     );

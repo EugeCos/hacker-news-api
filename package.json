@@ -13,9 +13,16 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node scripts/customized-config start",
+    "build": "node scripts/customized-config build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "less-plugin-autoprefix": "^2.0.0",
+    "proxyquire": "^2.0.2",
+    "rewire": "^4.0.1"
   }
 }
