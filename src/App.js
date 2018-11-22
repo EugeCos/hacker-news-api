@@ -4,6 +4,9 @@ import "./App.less";
 import "./css/global.less";
 import "./css/export.less";
 
+// -----------FRONT-END API-----------
+import api from "./api";
+
 // -------------COMPONENTS-------------
 import Navbar from "./components/Navbar/Navbar";
 import ViewContainer from "./components/ViewContainer/ViewContainer";
@@ -13,104 +16,125 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      stories: [
-        {
-          apiId: 18500075,
-          internalId: 1,
-          time: 1175714200,
-          title: "My YC app: Dropbox - Throw away your USB drive",
-          url: "http://www.getdropbox.com/u/2/screencast.html",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 2,
-          time: 1175714200,
-          title:
-            "Silent and Simple Ion Engine Powers a Plane with No Moving Parts",
-          url:
-            "https://www.scientificamerican.com/article/silent-and-simple-ion-engine-powers-a-plane-with-no-moving-parts/",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 3,
-          time: 1175714200,
-          title:
-            "Amazon admits it exposed customer email addresses, but refuses to give details",
-          url:
-            "https://techcrunch.com/2018/11/21/amazon-admits-it-exposed-customer-email-addresses-doubles-down-on-secrecy/",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 4,
-          time: 1175714200,
-          title: "Slow Software",
-          url: "https://www.inkandswitch.com/slow-software.html",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 5,
-          time: 1175714200,
-          title: "London, city of lost hospitals",
-          url: "https://wellcomecollection.org/articles/W6jAXxIAACAAmykv",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 6,
-          time: 1175714200,
-          title: "My YC app: Dropbox - Throw away your USB drive",
-          url: "http://www.getdropbox.com/u/2/screencast.html",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 7,
-          time: 1175714200,
-          title:
-            "Silent and Simple Ion Engine Powers a Plane with No Moving Parts",
-          url:
-            "https://www.scientificamerican.com/article/silent-and-simple-ion-engine-powers-a-plane-with-no-moving-parts/",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 8,
-          time: 1175714200,
-          title:
-            "Amazon admits it exposed customer email addresses, but refuses to give details",
-          url:
-            "https://techcrunch.com/2018/11/21/amazon-admits-it-exposed-customer-email-addresses-doubles-down-on-secrecy/",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 9,
-          time: 1175714200,
-          title: "Slow Software",
-          url: "https://www.inkandswitch.com/slow-software.html",
-          comments: []
-        },
-        {
-          apiId: 18500075,
-          internalId: 10,
-          time: 1175714200,
-          title: "London, city of lost hospitals",
-          url: "https://wellcomecollection.org/articles/W6jAXxIAACAAmykv",
-          comments: []
-        }
-      ]
+      storiesIdArray: [],
+      stories: [],
+      pageNumber: 1,
+      loading: false
     };
   }
+
+  getTopStories = () => {
+    api.fetchTopStories().then(res =>
+      // Fetching an array of top story id's and pushing 50 of them to component state (for potential future use)
+      this.setState(
+        {
+          storiesIdArray: res.data.slice(0, 50),
+          loading: true
+        },
+        () => this.getIndividualStories()
+      )
+    );
+  };
+
+  getIndividualStories = () => {
+    const { pageNumber } = this.state;
+    let storyInternalId = 1,
+      sliceStart = 0,
+      sliceEnd = 10;
+
+    // Depending on page number, updating stories' ID's and start / end points of Array slice
+    if (pageNumber === 2) {
+      storyInternalId = 11;
+      sliceStart = 10;
+      sliceEnd = 20;
+    } else if (pageNumber === 3) {
+      storyInternalId = 21;
+      sliceStart = 20;
+      sliceEnd = 30;
+    } else if (pageNumber === 4) {
+      storyInternalId = 31;
+      sliceStart = 30;
+      sliceEnd = 40;
+    } else if (pageNumber === 5) {
+      storyInternalId = 41;
+      sliceStart = 40;
+      sliceEnd = 50;
+    }
+
+    // Fetching individual stories based on id's from this.state.storiesIdArray
+    this.state.storiesIdArray
+      // Looping through the array and fetching only first 10 stories for page 1
+      .slice(sliceStart, sliceEnd)
+      .forEach(storyId =>
+        api
+          .fetchIndividualStory(
+            `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
+          )
+          .then(res => {
+            const story = res.data;
+
+            // Creating an object for each story
+            let storyObject = {};
+
+            storyObject.apiId = story.id;
+            storyObject.internalId = storyInternalId++;
+            storyObject.comments = story.kids;
+            storyObject.time = story.time;
+            storyObject.title = story.title;
+            storyObject.url = story.url;
+
+            // Populating component state with Stories array
+            this.setState({
+              stories: [...this.state.stories, storyObject],
+              loading: false
+            });
+          })
+      );
+  };
+
+  navigateToAnotherPage = option => {
+    // Option represent a Next or Previous page
+    switch (option) {
+      case "previous":
+        this.setState(
+          {
+            pageNumber: this.state.pageNumber - 1,
+            stories: [],
+            loading: true
+          },
+          () => this.getIndividualStories()
+        );
+        break;
+      case "next":
+        this.setState(
+          {
+            pageNumber: this.state.pageNumber + 1,
+            stories: [],
+            loading: true
+          },
+          () => this.getIndividualStories()
+        );
+        break;
+      default:
+        return;
+    }
+  };
+
+  componentWillMount() {
+    this.getTopStories();
+  }
+
   render() {
-    const { stories } = this.state;
+    const { stories, pageNumber, loading } = this.state;
     return (
       <div className="App">
         <Navbar />
-        <ViewContainer stories={stories} />
+        <ViewContainer
+          stories={stories}
+          navigateToAnotherPage={this.navigateToAnotherPage}
+          pageNumber={pageNumber}
+          loading={loading}
+        />
         <Footer />
       </div>
     );
