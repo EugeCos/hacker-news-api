@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // ----------MATERIAL UI-----------
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -11,7 +12,9 @@ import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </MuiThemeProvider>,
   document.getElementById("root")
 );

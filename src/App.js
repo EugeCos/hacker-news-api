@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
 import "./App.less";
 import "./css/global.less";
 import "./css/export.less";
@@ -9,8 +9,9 @@ import api from "./api";
 
 // -------------COMPONENTS-------------
 import Navbar from "./components/Navbar/Navbar";
-import ViewContainer from "./components/ViewContainer/ViewContainer";
 import Footer from "./components/Footer/Footer";
+import StoryList from "./components/StoryList/StoryList";
+import SelectedStory from "./components/SelectedStory/SelectedStory";
 
 class App extends Component {
   constructor() {
@@ -19,7 +20,8 @@ class App extends Component {
       storiesIdArray: [],
       stories: [],
       pageNumber: 1,
-      loading: false
+      loading: false,
+      selectedStoryIndex: 0
     };
   }
 
@@ -82,6 +84,7 @@ class App extends Component {
             storyObject.time = story.time;
             storyObject.title = story.title;
             storyObject.url = story.url;
+            storyObject.user = story.by;
 
             // Populating component state with Stories array
             this.setState({
@@ -126,17 +129,33 @@ class App extends Component {
 
   render() {
     const { stories, pageNumber, loading } = this.state;
+
     return (
-      <div className="App">
+      <Fragment>
         <Navbar />
-        <ViewContainer
-          stories={stories}
-          navigateToAnotherPage={this.navigateToAnotherPage}
-          pageNumber={pageNumber}
-          loading={loading}
-        />
+        <div className="view-container">
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <StoryList
+                  stories={stories}
+                  navigateToAnotherPage={this.navigateToAnotherPage}
+                  pageNumber={pageNumber}
+                  loading={loading}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/story/:id"
+              render={props => <SelectedStory stories={stories} {...props} />}
+            />
+          </Switch>
+        </div>
         <Footer />
-      </div>
+      </Fragment>
     );
   }
 }

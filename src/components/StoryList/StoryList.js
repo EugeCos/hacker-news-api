@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./ViewContainer.less";
+import React, { Component, Fragment } from "react";
+import "./StoryList.less";
 import moment from "moment";
 
 // ------------COMPONENTS------------
@@ -9,13 +9,13 @@ import ButtonsContainer from "./ButtonsContainer/ButtonsContainer";
 // -------------MATERIAL UI--------------
 import CircularProgress from "material-ui/CircularProgress";
 
-export default class ViewContainer extends Component {
+export default class StoryList extends Component {
   render() {
     const { stories, pageNumber, loading, navigateToAnotherPage } = this.props;
 
     return (
-      <div className="view-container">
-        <div className="d-flex view-container-header">
+      <Fragment>
+        <div className="d-flex storylist-header">
           <h3>Top stories for {moment().format("LL")}</h3>
           <div className="btn-container d-flex">
             <ButtonsContainer
@@ -24,6 +24,8 @@ export default class ViewContainer extends Component {
             />
           </div>
         </div>
+
+        {/* If waiting for API response, display Spinner */}
         {loading ? (
           <div className="loading-container d-flex">
             <CircularProgress size={60} thickness={5} color={"#f05f57"} />
@@ -31,7 +33,7 @@ export default class ViewContainer extends Component {
         ) : (
           <Story stories={stories} />
         )}
-      </div>
+      </Fragment>
     );
   }
 }

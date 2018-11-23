@@ -7,21 +7,29 @@
   height: 50px;
   align-items: center;
   box-shadow: 1px 0px 10px 1px rgba(186, 155, 207, 0.3);
+  color: #333;
 
   &:hover {
     background: #be643a1f;
     cursor: pointer;
+    border: 1px solid rgba(207, 191, 191, 0.882);
   }
 }
 
 .story-number {
-  margin: 0 20px 0 10px;
+  margin: 0 15px 0 5px;
   width: 35px;
   line-height: 35px;
   border-radius: 50%;
   text-align: center;
   font-size: 18px;
-  border: 1px solid rgba(187, 149, 149, 0.514);
+  border: 1px solid rgba(151, 151, 151, 0.356);
+  transition: background 0.2s ease-in-out, color 0.2s ease;
+}
+
+.active {
+  background: #fab0a075;
+  color: rgb(90, 17, 17);
 }
 
 .story-date-and-source {

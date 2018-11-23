@@ -1,0 +1,74 @@
+// ----------HEADER-----------
+.selected-story-wrapper {
+  h2 {
+    display: table;
+    font-weight: 100;
+    font-size: 170%;
+    line-height: 30px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .selected-story-header {
+    position: relative;
+  }
+
+  .story-website {
+    display: inline-block;
+    margin: 0;
+    letter-spacing: 4px;
+    color: grey;
+    line-height: 35px;
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .story-details {
+    line-height: 20px;
+    font-size: 90%;
+  }
+}
+
+.selected-story-header {
+  .btn-custom {
+    background: #95a5a6;
+    position: absolute;
+    right: 0;
+    top: 35%;
+  }
+}
+
+hr.hr-styled {
+  margin: 20px 0 25px;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgb(0, 0, 0),
+    rgba(255, 255, 255, 0)
+  );
+}
+// ------------------------------
+
+// ----------COMMENTS----------
+.comment-container {
+  background: rgba(192, 192, 192, 0.158);
+  padding: 10px 25px;
+  margin-bottom: 15px;
+  transition: background 0.1s ease-in-out;
+  &:hover {
+    background: rgba(192, 192, 192, 0.358);
+  }
+}
+
+.comment-header {
+  color: grey;
+}
