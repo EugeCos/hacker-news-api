@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.less";
 import "./css/global.less";
 import "./css/export.less";
@@ -21,21 +21,25 @@ class App extends Component {
       stories: [],
       pageNumber: 1,
       loading: false,
-      selectedStoryIndex: 0
+      selectedStoryIndex: 0,
+      apiError: false
     };
   }
 
   getTopStories = () => {
-    api.fetchTopStories().then(res =>
-      // Fetching an array of top story id's and pushing 50 of them to component state (for potential future use)
-      this.setState(
-        {
-          storiesIdArray: res.data.slice(0, 50),
-          loading: true
-        },
-        () => this.getIndividualStories()
+    api
+      .fetchTopStories()
+      .then(res =>
+        // Fetching an array of top story id's and pushing 50 of them to component state (for potential future use)
+        this.setState(
+          {
+            storiesIdArray: res.data.slice(0, 50),
+            loading: true
+          },
+          () => this.getIndividualStories()
+        )
       )
-    );
+      .catch(err => this.setState({ apiError: true }));
   };
 
   getIndividualStories = () => {
@@ -92,6 +96,7 @@ class App extends Component {
               loading: false
             });
           })
+          .catch(err => console.log(err))
       );
   };
 
@@ -128,31 +133,48 @@ class App extends Component {
   }
 
   render() {
-    const { stories, pageNumber, loading } = this.state;
+    const { stories, pageNumber, loading, apiError } = this.state;
 
     return (
       <Fragment>
         <Navbar />
         <div className="view-container">
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <StoryList
-                  stories={stories}
-                  navigateToAnotherPage={this.navigateToAnotherPage}
-                  pageNumber={pageNumber}
-                  loading={loading}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/story/:id"
-              render={props => <SelectedStory stories={stories} {...props} />}
-            />
-          </Switch>
+          {apiError ? (
+            <div className="error-container">
+              <img
+                src="/img/error.png"
+                alt="no-connection"
+                className="error-image"
+              />
+              <h4>
+                Could not load stories. Please check your Internet connection.
+              </h4>
+            </div>
+          ) : (
+            <Switch>
+              {/* Route for Home page */}
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <StoryList
+                    stories={stories}
+                    navigateToAnotherPage={this.navigateToAnotherPage}
+                    pageNumber={pageNumber}
+                    loading={loading}
+                  />
+                )}
+              />
+              {/* Route for Selected story */}
+              <Route
+                exact
+                path="/story/:id"
+                render={props => <SelectedStory stories={stories} {...props} />}
+              />
+              {/* Redirect to Home page if users manually type things in URL */}
+              <Redirect to="/" />;
+            </Switch>
+          )}
         </div>
         <Footer />
       </Fragment>

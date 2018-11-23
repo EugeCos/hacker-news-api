@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import "./StoryList.less";
 import moment from "moment";
 
@@ -10,6 +11,11 @@ import ButtonsContainer from "./ButtonsContainer/ButtonsContainer";
 import CircularProgress from "material-ui/CircularProgress";
 
 export default class StoryList extends Component {
+  componentDidMount() {
+    // Scroll to top on component render
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const { stories, pageNumber, loading, navigateToAnotherPage } = this.props;
 
@@ -37,3 +43,10 @@ export default class StoryList extends Component {
     );
   }
 }
+
+StoryList.propTypes = {
+  stories: PropTypes.array.isRequired,
+  navigateToAnotherPage: PropTypes.func.isRequired,
+  pageNumber: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired
+};

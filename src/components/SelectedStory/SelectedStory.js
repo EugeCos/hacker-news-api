@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./SelectedStory.less";
 import moment from "moment";
 
 // -----------FRONT-END API-----------
 import api from "../../api";
+
+// ----------REACT-CSS-TRANSITION-GROUP-----------
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 export default class SelectedStory extends Component {
   constructor() {
@@ -54,25 +58,40 @@ export default class SelectedStory extends Component {
             this.setState({
               comments: [...this.state.comments, commentObject]
             });
-          });
+          })
+          .catch(err => console.log(err));
       });
     }
+
+    // Scroll to top on component render
+    window.scrollTo(0, 0);
   }
 
   render() {
     const { story, comments } = this.state;
 
+    // Transition group effects
+    const transitionOptions = {
+      transitionName: "fade-effect",
+      transitionAppear: true,
+      transitionAppearTimeout: 300,
+      transitionEnterTimeout: 300,
+      transitionLeaveTimeout: 300
+    };
+
     let commentsJSX = comments.map(comment => {
       return (
-        <div className="comment-container" key={comment.apiId}>
-          <p className="comment-header">
-            {comment.user}, {moment.unix(comment.time).fromNow()}
-          </p>
-          <p
-            className="comment-body"
-            dangerouslySetInnerHTML={{ __html: comment.text }}
-          />
-        </div>
+        <ReactCSSTransitionGroup {...transitionOptions}>
+          <div className="comment-container" key={comment.apiId}>
+            <p className="comment-header">
+              {comment.user}, {moment.unix(comment.time).fromNow()}
+            </p>
+            <p
+              className="comment-body"
+              dangerouslySetInnerHTML={{ __html: comment.text }}
+            />
+          </div>
+        </ReactCSSTransitionGroup>
       );
     });
 
@@ -108,9 +127,15 @@ export default class SelectedStory extends Component {
 
         {/* Comments */}
         <section className="selected-story-comments-wrapper">
-          {comments.length ? commentsJSX : "No comments here bro :("}
+          {story.comments !== undefined
+            ? commentsJSX
+            : "No comments here bro :("}
         </section>
       </div>
     );
   }
 }
+
+SelectedStory.propTypes = {
+  stories: PropTypes.array.isRequired
+};
