@@ -25,7 +25,7 @@ export default class SelectedStory extends Component {
 
     // Extracting selected story from Stories, based on URL
     const story = this.props.stories.find(item => {
-      return item.internalId == storyId;
+      return item.internalId === Number(storyId);
     });
 
     this.setState({
@@ -99,8 +99,9 @@ export default class SelectedStory extends Component {
       <div className="selected-story-wrapper">
         {/* Story header */}
         <section className="selected-story-header">
+          {/* Only show link if screen width is > 640px */}
           <Link to="/">
-            <div className="btn-custom">Return</div>
+            <div className="btn-custom btn-return-desktop">Return</div>
           </Link>
           <h2 onClick={() => window.open(story.url, "_blank")}>
             {story.title}
@@ -122,6 +123,11 @@ export default class SelectedStory extends Component {
             by {story.user} {moment.unix(story.time).fromNow()} &nbsp;|&nbsp;{" "}
             {story["comments"] ? story.comments.length : 0} comments
           </p>
+
+          {/* Only show link if screen width is < 640px */}
+          <Link to="/">
+            <div className="btn-custom btn-return-mobile">Return</div>
+          </Link>
         </section>
         <hr className="hr-styled" />
 

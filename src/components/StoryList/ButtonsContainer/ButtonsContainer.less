@@ -1,5 +1,6 @@
 .btn-custom {
   border-radius: 3px;
+  font-size: 100%;
   text-align: center;
   min-width: 130px;
   display: inline-block;
@@ -11,5 +12,10 @@
   transition: background 0.15s ease-in-out;
   &:hover {
     background: #00cca3;
+  }
+  @media screen and(max-width: 640px) {
+    min-width: 110px;
+    padding: 3px 7px;
+    font-size: 90%;
   }
 }

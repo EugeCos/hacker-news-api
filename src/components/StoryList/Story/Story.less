@@ -8,6 +8,10 @@
   align-items: center;
   box-shadow: 1px 0px 10px 1px rgba(186, 155, 207, 0.3);
   color: #333;
+  @media screen and (max-width: 640px) {
+    height: 65px;
+    padding: 7px 8px;
+  }
 
   &:hover {
     background: #be643a1f;
@@ -25,6 +29,9 @@
   font-size: 18px;
   border: 1px solid rgba(151, 151, 151, 0.356);
   transition: background 0.2s ease-in-out, color 0.2s ease;
+  @media screen and (max-width: 640px) {
+    display: none;
+  }
 }
 
 .active {
@@ -32,14 +39,53 @@
   color: rgb(90, 17, 17);
 }
 
+.story-title-wrapper {
+  @media screen and (max-width: 640px) {
+    margin-left: 8px;
+  }
+}
+
+.story-title {
+  font-size: 105%;
+  margin-top: 5px;
+  line-height: 15px;
+  @media screen and (max-width: 640px) {
+    font-size: 100%;
+    line-height: 18px;
+  }
+}
+
+.story-url {
+  color: grey;
+  @media screen and (max-width: 640px) {
+    display: none !important;
+  }
+}
+
 .story-date-and-source {
   p {
     display: inline;
     margin-right: 40px;
     font-size: 80%;
+    @media screen and (max-width: 1024px) {
+      margin-right: 25px;
+    }
   }
 }
-.story-comments {
+
+.story-comments-desktop {
   position: absolute;
   right: 5%;
+  @media screen and (max-width: 1024px) {
+    display: none !important;
+  }
+}
+
+.story-comments-mobile {
+  @media screen and (min-width: 1024px) {
+    display: none !important;
+  }
+  @media screen and (max-width: 640px) {
+    color: grey;
+  }
 }

@@ -8,6 +8,10 @@
     &:hover {
       cursor: pointer;
     }
+    @media screen and(max-width: 640px) {
+      display: block;
+      font-size: 140%;
+    }
   }
 
   p {
@@ -16,6 +20,9 @@
 
   .selected-story-header {
     position: relative;
+    @media screen and(max-width: 640px) {
+      text-align: center;
+    }
   }
 
   .story-website {
@@ -28,11 +35,17 @@
       text-decoration: underline;
       cursor: pointer;
     }
+    @media screen and(max-width: 640px) {
+      line-height: 10px;
+    }
   }
 
   .story-details {
     line-height: 20px;
     font-size: 90%;
+    @media screen and(max-width: 640px) {
+      line-height: 25px;
+    }
   }
 }
 
@@ -41,7 +54,11 @@
     background: #95a5a6;
     position: absolute;
     right: 0;
-    top: 35%;
+    top: 45%;
+    @media screen and(max-width: 640px) {
+      position: initial;
+      margin-top: 15px;
+    }
   }
 }
 
@@ -55,6 +72,21 @@ hr.hr-styled {
     rgb(0, 0, 0),
     rgba(255, 255, 255, 0)
   );
+  @media screen and(max-width: 640px) {
+    margin: 10px 0 15px;
+  }
+}
+
+.btn-return-desktop {
+  @media screen and(max-width: 640px) {
+    display: none;
+  }
+}
+
+.btn-return-mobile {
+  @media screen and(min-width: 640px) {
+    display: none;
+  }
 }
 // ------------------------------
 

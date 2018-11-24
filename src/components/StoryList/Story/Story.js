@@ -23,6 +23,7 @@ export default class Story extends Component {
 
   render() {
     const { stories } = this.props;
+    const { hoveredStory } = this.state;
 
     // Transition group effects
     const transitionOptions = {
@@ -49,7 +50,7 @@ export default class Story extends Component {
               {/* Story number  */}
               <div
                 className={`story-number ${
-                  this.state.hoveredStory === story.internalId ? "active" : ""
+                  hoveredStory === story.internalId ? "active" : ""
                 }`}
               >
                 {story.internalId}
@@ -60,14 +61,22 @@ export default class Story extends Component {
                 <div className="story-title">{story.title}</div>
                 <div className="story-date-and-source">
                   <p>posted {moment.unix(story.time).fromNow()}</p>
-                  <p>
+
+                  {/* Only show below div if screen width is < 1024px (CSS setup) */}
+                  <p className="story-comments-mobile">
+                    {story["comments"] ? story.comments.length : 0} comments
+                  </p>
+
+                  {/* Only show below div if screen width is > 640px (CSS setup) */}
+                  <p className="story-url">
                     {story["url"] ? new URL(story.url).host.substring(4) : ""}
                   </p>
                 </div>
               </div>
 
               {/* Story comments */}
-              <div className="story-comments">
+              {/* Only show below div if screen width is > 1024px (CSS setup) */}
+              <div className="story-comments-desktop">
                 {story["comments"] ? story.comments.length : 0} comments
               </div>
             </div>
