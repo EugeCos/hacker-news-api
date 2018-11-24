@@ -37,7 +37,7 @@ export default class Story extends Component {
     let storyJSX = stories.map(story => {
       return (
         <Link
-          to={`/story/${story.internalId}`}
+          to={`/story/${story.apiId}`}
           style={{ textDecoration: "none" }}
           key={story.internalId}
         >

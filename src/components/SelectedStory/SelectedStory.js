@@ -20,21 +20,58 @@ export default class SelectedStory extends Component {
   }
 
   //Populating component state with Story data
-  componentWillMount() {
-    const storyId = this.props.match.params.id;
+  componentDidMount() {
+    const storyId = this.props.match.params.storyId;
 
-    // Extracting selected story from Stories, based on URL
-    const story = this.props.stories.find(item => {
-      return item.internalId === Number(storyId);
-    });
+    // If user navigated to story from Home page
+    if (this.props.stories.length > 0) {
+      // Extracting selected story from Stories, based on URL
+      const story = this.props.stories.find(item => {
+        return item.apiId === Number(storyId);
+      });
 
-    this.setState({
-      story
-    });
+      this.setState(
+        {
+          story
+        },
+        () => this.fetchComments()
+      );
+    }
+    // If user refreshed the page or manually typed in the address in the URL
+    else {
+      api
+        .fetchIndividualStory(
+          `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
+        )
+        .then(res => {
+          const story = res.data;
+
+          // Creating an object for each story
+          let storyObject = {};
+
+          storyObject.apiId = story.id;
+          storyObject.comments = story.kids;
+          storyObject.time = story.time;
+          storyObject.title = story.title;
+          storyObject.url = story.url;
+          storyObject.user = story.by;
+
+          // Populating component state with selected story
+          this.setState(
+            {
+              story: storyObject
+            },
+            () => this.fetchComments()
+          );
+        });
+    }
+
+    // Scroll to top on component render
+    window.scrollTo(0, 0);
   }
 
   // Fetching first 20 comments based on Story ID
-  componentDidMount() {
+  fetchComments = () => {
     const { story } = this.state;
 
     if (story.comments) {
@@ -62,10 +99,7 @@ export default class SelectedStory extends Component {
           .catch(err => console.log(err));
       });
     }
-
-    // Scroll to top on component render
-    window.scrollTo(0, 0);
-  }
+  };
 
   render() {
     const { story, comments } = this.state;
@@ -81,8 +115,8 @@ export default class SelectedStory extends Component {
 
     let commentsJSX = comments.map(comment => {
       return (
-        <ReactCSSTransitionGroup {...transitionOptions}>
-          <div className="comment-container" key={comment.apiId}>
+        <ReactCSSTransitionGroup {...transitionOptions} key={comment.apiId}>
+          <div className="comment-container">
             <p className="comment-header">
               {comment.user}, {moment.unix(comment.time).fromNow()}
             </p>

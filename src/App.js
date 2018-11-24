@@ -168,7 +168,7 @@ class App extends Component {
               {/* Route for Selected story */}
               <Route
                 exact
-                path="/story/:id"
+                path="/story/:storyId"
                 render={props => <SelectedStory stories={stories} {...props} />}
               />
               {/* Redirect to Home page if users manually type things in URL */}
