@@ -40,6 +40,7 @@ for individual story or individual comment
 - Axios - API calls
 - Material UI - framework for some front-end elements
 - Moment - for date and time display
+- React TransitionGroup - for smooth transition between page elements during navigation
 
 ---
 
