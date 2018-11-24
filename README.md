@@ -46,7 +46,7 @@ for individual story or individual comment
 
 ## Timeline
 
-November 21 - August 24, 2018
+November 21-24, 2018
 
 ## Contributors
 
