@@ -22,7 +22,7 @@ export default class StoryList extends Component {
     return (
       <Fragment>
         <div className="d-flex storylist-header">
-          <h3>Top stories for {moment().format("LL")}</h3>
+          <h3>Top 50 stories for {moment().format("LL")}</h3>
           <div className="btn-container d-flex">
             <ButtonsContainer
               pageNumber={pageNumber}

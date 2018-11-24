@@ -1,21 +1,56 @@
-# ES6 React boilerplate
+## Synopsis
 
-Simple and optimized React boilerplate. Features include:
+A serverless web-app that pulls Top-50 stories and their corresponding comments from Hacker News API and displays them in a user friendly layout.
 
-- [x] React
-- [x] ECMAScript 6 and JSX support
-- [x] React Router
-- [x] Hot Module Replacement using [react-hot-loader](https://github.com/gaearon/react-hot-loader)
-- [x] ES6 linting with continuous linting on file change
-- [x] LESS support
-- [x] Material UI
-- [x] Font Awesome
-- [x] lodash
-- [x] Axios
+## Live Demo
 
-## Starting the dev server
+Link to App: [Hacker News Light](https://hacker-news-light.herokuapp.com/)
 
-1. `https://github.com/EugeCos/react-app-boilerplate.git`
-2. Run `npm install`
-3. Start the dev server using `npm start`
-4. Open [http://localhost:3000](http://localhost:3000)
+_Please wait for up to 15 seconds as the free Heroku server fires up for the app._
+
+## Installation
+
+$git clone https://github.com/EugeCos/hacker-news-api.git<br />$ cd PROJECT <br />
+
+\$ npm install
+
+## Start & watch
+
+\$ npm start
+
+## Simple build for production
+
+\$ npm run build
+
+## API Reference
+
+https://hacker-news.firebaseio.com/v0/topstories.json <br />
+for top 500 stories
+
+https://hacker-news.firebaseio.com/v0/item/8863.json <br />
+for individual story or individual comment
+
+---
+
+## Tools
+
+- ReactJS - main library
+- LESS - CSS preprocessing
+- Webpack - watch and compile LESS files
+- Axios - API calls
+- Material UI - framework for some front-end elements
+- Moment - for date and time display
+
+---
+
+## Timeline
+
+November 21 - August 24, 2018
+
+## Contributors
+
+- Eugene Costov // eugene.costov@gmail.com
+
+## Licence
+
+_Hacker News Light_ is available under MIT.
