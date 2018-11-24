@@ -16,7 +16,8 @@
     "start": "node scripts/customized-config start",
     "build": "node scripts/customized-config build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
     "less": "^3.8.1",
