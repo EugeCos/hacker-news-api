@@ -10,6 +10,9 @@ import api from "../../api";
 // ----------REACT-CSS-TRANSITION-GROUP-----------
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
+// ----------UTILITY FUNCITONS-----------
+import { parseUrl } from "../../utils/utils";
+
 export default class SelectedStory extends Component {
   constructor() {
     super();
@@ -142,16 +145,9 @@ export default class SelectedStory extends Component {
           </h2>
           <p
             className="story-website"
-            onClick={() =>
-              window.open(
-                story["url"]
-                  ? `https://${new URL(story.url).host.substring(4)}`
-                  : "",
-                "_blank"
-              )
-            }
+            onClick={() => window.open(story["url"] ? story.url : "", "_blank")}
           >
-            {story["url"] ? new URL(story.url).host.substring(4) : ""}
+            {story["url"] ? parseUrl(story.url) : ""}
           </p>
           <p className="story-details">
             by {story.user} {moment.unix(story.time).fromNow()} &nbsp;|&nbsp;{" "}

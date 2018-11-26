@@ -147,7 +147,8 @@ class App extends Component {
                 className="error-image"
               />
               <h4>
-                Could not load stories. Please check your Internet connection.
+                <strong>Oops!</strong> An unexpected error seems to have
+                occured. <br /> Why not try refreshing the page?
               </h4>
             </div>
           ) : (

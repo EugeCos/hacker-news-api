@@ -6,6 +6,7 @@
     "font-awesome": "^4.7.0",
     "material-ui": "^0.20.2",
     "moment": "^2.22.2",
+    "parse-domain": "^2.1.6",
     "react": "^16.4.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.4.2",

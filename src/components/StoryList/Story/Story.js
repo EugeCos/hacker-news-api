@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import "./Story.less";
 import moment from "moment";
 
+// ----------UTILITY FUNCITONS-----------
+import { parseUrl } from "../../../utils/utils";
+
 // ----------REACT-CSS-TRANSITION-GROUP-----------
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
@@ -69,7 +72,7 @@ export default class Story extends Component {
 
                   {/* Only show below div if screen width is > 640px (CSS setup) */}
                   <p className="story-url">
-                    {story["url"] ? new URL(story.url).host.substring(4) : ""}
+                    {story["url"] ? parseUrl(story.url) : ""}
                   </p>
                 </div>
               </div>
