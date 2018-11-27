@@ -44,27 +44,16 @@ class App extends Component {
 
   getIndividualStories = () => {
     const { pageNumber } = this.state;
+
     let storyInternalId = 1,
       sliceStart = 0,
       sliceEnd = 10;
 
-    // Depending on page number, updating stories' ID's and start / end points of Array slice
-    if (pageNumber === 2) {
-      storyInternalId = 11;
-      sliceStart = 10;
-      sliceEnd = 20;
-    } else if (pageNumber === 3) {
-      storyInternalId = 21;
-      sliceStart = 20;
-      sliceEnd = 30;
-    } else if (pageNumber === 4) {
-      storyInternalId = 31;
-      sliceStart = 30;
-      sliceEnd = 40;
-    } else if (pageNumber === 5) {
-      storyInternalId = 41;
-      sliceStart = 40;
-      sliceEnd = 50;
+    // Depending on page number, updating stories' serial numbers and start/end points of Array slice
+    if (pageNumber > 1) {
+      storyInternalId = pageNumber * 10 - 9;
+      sliceStart = pageNumber * 10 - 10;
+      sliceEnd = pageNumber * 10;
     }
 
     // Fetching individual stories based on id's from this.state.storiesIdArray

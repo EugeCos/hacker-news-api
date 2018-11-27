@@ -145,7 +145,12 @@ export default class SelectedStory extends Component {
           </h2>
           <p
             className="story-website"
-            onClick={() => window.open(story["url"] ? story.url : "", "_blank")}
+            onClick={() =>
+              window.open(
+                story["url"] ? `https://${parseUrl(story.url)}` : "",
+                "_blank"
+              )
+            }
           >
             {story["url"] ? parseUrl(story.url) : ""}
           </p>
